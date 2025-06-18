@@ -1,62 +1,31 @@
-[
-  {
-    "name": "Charan",
-    "age": 23,
-    "email": "charan@example.com",
-    "skills": ["JavaScript", "Node.js", "React"],
-    "isStudent": false,
-    "address": {
-      "street": "123 Main Street",
-      "city": "Hyderabad",
-      "country": "India"
-    }
-  },
-  {
-    "name": "Anjali",
-    "age": 21,
-    "email": "anjali@example.com",
-    "skills": ["Python", "Django", "SQL"],
-    "isStudent": true,
-    "address": {
-      "street": "45 MG Road",
-      "city": "Bangalore",
-      "country": "India"
-    }
-  },
-  {
-    "name": "Ravi",
-    "age": 28,
-    "email": "ravi@example.com",
-    "skills": ["Java", "Spring Boot", "AWS"],
-    "isStudent": false,
-    "address": {
-      "street": "78 Jubilee Hills",
-      "city": "Hyderabad",
-      "country": "India"
-    }
-  },
-  {
-    "name": "Neha",
-    "age": 24,
-    "email": "neha@example.com",
-    "skills": ["HTML", "CSS", "JavaScript"],
-    "isStudent": false,
-    "address": {
-      "street": "10 Residency Road",
-      "city": "Mumbai",
-      "country": "India"
-    }
-  },
-  {
-    "name": "Karan",
-    "age": 22,
-    "email": "karan@example.com",
-    "skills": ["C++", "Go", "Docker"],
-    "isStudent": true,
-    "address": {
-      "street": "56 Park Lane",
-      "city": "Delhi",
-      "country": "India"
-    }
-  }
-]
+<?php
+header('Content-Type: application/json');
+
+// Read the data.json file
+$jsonData = file_get_contents('data.json');
+
+// Check if file was read successfully
+if ($jsonData === false) {
+    http_response_code(500);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Could not read data.json file'
+    ]);
+    exit;
+}
+
+// Optionally decode and re-encode to validate
+$data = json_decode($jsonData, true);
+
+if (json_last_error() !== JSON_ERROR_NONE) {
+    http_response_code(500);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Invalid JSON in data.json file'
+    ]);
+    exit;
+}
+
+// Send the JSON data
+echo json_encode($data);
+?>
